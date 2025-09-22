@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recibos Guardados - Chicos Washing</title>
+  <link rel="icon" type="image/png" href="imagenes/logo1.png" />
+  <link rel="stylesheet" href="datos.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="contenedor-datos">
+    <h2>Recibos Guardados</h2>
+
+    <!-- FILTROS -->
+    <div class="filtros">
+      <label>Desde: <input type="date" id="filtroDesde"></label>
+      <label>Hasta: <input type="date" id="filtroHasta"></label>
+      <button onclick="mostrarRecibos()">Aplicar Filtro</button>
+      <button style="background-color: red; color: white; margin-top: 10px;" onclick="eliminarFiltrados()">Eliminar Filtrados</button>
+    </div>    
+
+    <!-- GASTOS -->
+    <div class="gasto-form">
+      <h3>Registrar Gasto</h3>
+
+      <label for="fechaGasto">Fecha</label>
+      <input type="date" id="fechaGasto" required />
+
+      <label for="descripcionGasto">Descripción</label>
+      <input type="text" id="descripcionGasto" placeholder="Descripción" required />
+
+      <label for="montoGasto">Monto ($)</label>
+      <input type="number" id="montoGasto" placeholder="Monto ($)" required />
+
+      <label for="categoriaGasto">Categoría</label>
+      <select id="categoriaGasto" required>
+        <option value="" disabled selected>Selecciona categoría</option>
+        <option value="insumos">Insumos</option>
+        <option value="gastos">Gastos</option>
+        <option value="otros">Otros</option>
+      </select>
+
+      <label for="sucursalGasto">Sucursal</label>
+      <select id="sucursalGasto" required>
+        <option value="" disabled selected>Selecciona sucursal</option>
+        <option value="Lavandería 1">Lavandería 1</option>
+        <option value="Lavandería 2">Lavandería 2</option>
+      </select>
+
+      <button onclick="registrarGasto()">Agregar Gasto</button>
+    </div>
+
+    <!-- LISTA DE RECIBOS -->
+    <div id="lista-recibos"></div>
+    <div id="total-ganancias">Total: $0</div>
+
+    <!-- GRAFICA -->
+    <canvas id="miGrafica" width="400" height="200"></canvas>
+
+    <!-- BOTONES -->
+    <button class="ver-datos" onclick="exportarAExcel()">Descargar Excel</button>
+    <button class="volver" onclick="window.location.href='index.html'">Crear Recibos</button>
+    <button class="volver1" onclick="window.location.href='analisis.html'">Analisis Avanzado</button>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
+
+  <!-- SheetJS para exportar a Excel -->
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+  <!-- Tu archivo JS -->
+  <script src="datos.js"></script>
+
+  <!-- MODAL EDICIÓN -->
+  <div id="modalEditarRecibo" style="display: none;" class="modal">
+    <div class="modal-content">
+      <h3>Editar Recibo</h3>
+      <label>Nombre del Cliente:</label>
+      <input type="text" id="modalNuevoCliente"><br>
+      <label>Fecha de Ingreso:</label>
+      <input type="date" id="modalNuevaFechaIngreso"><br>
+      <label>Fecha de Entrega:</label>
+      <input type="date" id="modalNuevaFechaEntrega"><br>
+      <label>Total ($):</label>
+      <input type="number" id="modalNuevoTotal" step="0.01"><br>
+      <label>Sucursal (servicio):</label>
+      <input type="text" id="modalNuevaSucursal"><br>
+      <button id="btnGuardarCambios">Guardar Cambios</button>
+      <button onclick="document.getElementById('modalEditarRecibo').style.display='none'">Cancelar</button>
+    </div>
+  </div>
+</body>
+</html>

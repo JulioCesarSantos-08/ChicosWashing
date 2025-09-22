@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Análisis de Recibos y Gastos - Lavandería JC</title>
+  <link rel="icon" type="image/png" href="imagenes/favicon.png" />
+  <link rel="stylesheet" href="analisis.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
+</head>
+<body>
+  <div class="contenedor">
+    <h2>Análisis Avanzado</h2>
+
+    <div class="tabs">
+      <button onclick="mostrarSeccion('recibos')">Recibos</button>
+      <button onclick="window.location.href='datos.html'">Volver a Datos</button>
+      <button onclick="mostrarSeccion('gastos')">Gastos</button>
+    </div>
+
+    <!-- Sección Recibos -->
+    <div id="seccion-recibos" class="seccion activa">
+      <div class="filtros">
+        <label>Desde: <input type="date" id="filtroDesde" /></label>
+        <label>Hasta: <input type="date" id="filtroHasta" /></label>
+        <label>Estado:
+          <select id="filtroEstado">
+            <option value="">Todos</option>
+            <option value="pagado">Pagado</option>
+            <option value="pendiente">Pendiente</option>
+          </select>
+        </label>
+        <label>Método de Pago:
+          <select id="filtroMetodoPago">
+            <option value="">Todos</option>
+            <option value="efectivo">Efectivo</option>
+            <option value="transferencia">Transferencia</option>
+          </select>
+        </label>
+        <label>Sucursal:
+          <select id="filtroSucursal">
+            <option value="">Todas</option>
+            <option value="Lavandería 1">Lavandería 1</option>
+            <option value="Lavandería 2">Lavandería 2</option>
+          </select>
+        </label>
+        <label>Folio: <input type="text" id="filtroFolio" placeholder="Ej. 1300" /></label>
+      </div>
+
+      <button onclick="aplicarFiltros()">Aplicar Filtros</button>
+
+      <div class="resumen" id="resumenRecibos"></div>
+
+      <table id="tablaRecibos">
+        <thead>
+          <tr>
+            <th>Folio</th>
+            <th>Cliente</th>
+            <th>Total</th>
+            <th>Fecha Entrega</th>
+            <th>Estado</th>
+            <th>Método Pago</th>
+            <th>Sucursal</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <canvas id="graficaEfectivo" width="400" height="200"></canvas>
+      <canvas id="graficaTransferencia" width="400" height="200"></canvas>
+    </div>
+
+    <!-- Sección Gastos -->
+    <div id="seccion-gastos" class="seccion">
+      <div class="filtros">
+        <label>Desde: <input type="date" id="filtroGastoDesde" /></label>
+        <label>Hasta: <input type="date" id="filtroGastoHasta" /></label>
+        <label>Categoría:
+          <select id="filtroCategoria">
+            <option value="">Todas</option>
+            <option value="insumos">Insumos</option>
+            <option value="gastos">Gastos</option>
+            <option value="otro">Otros</option>
+          </select>
+        </label>
+        <label>Sucursal:
+          <select id="filtroSucursalGasto">
+            <option value="">Todas</option>
+            <option value="Lavandería 1">Lavandería 1</option>
+            <option value="Lavandería 2">Lavandería 2</option>
+          </select>
+        </label>
+        <label>Descripción: <input type="text" id="filtroDescripcion" placeholder="Buscar..." /></label>
+      </div>
+
+      <button onclick="aplicarFiltrosGastos()">Aplicar Filtros</button>
+
+      <div class="resumen" id="resumenGastos"></div>
+
+      <table id="tablaGastos">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Categoría</th>
+            <th>Monto</th>
+            <th>Descripción</th>
+            <th>Sucursal</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="analisis.js"></script>
+</body>
+</html>
