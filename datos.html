@@ -14,36 +14,32 @@
 
     <!-- FILTROS -->
     <div class="filtros">
-      <label>Desde: <input type="date" id="filtroDesde"></label>
-      <label>Hasta: <input type="date" id="filtroHasta"></label>
+      <label>Desde:</label>
+      <input type="date" id="filtroDesde">
+      
+      <label>Hasta:</label>
+      <input type="date" id="filtroHasta">
+      
       <button onclick="mostrarRecibos()">Aplicar Filtro</button>
-      <button style="background-color: red; color: white; margin-top: 10px;" onclick="eliminarFiltrados()">Eliminar Filtrados</button>
+      <button onclick="eliminarFiltrados()">Eliminar Filtrados</button>
     </div>    
 
     <!-- GASTOS -->
-    <div class="gasto-form">
-      <h3>Registrar Gasto</h3>
-
-      <label for="fechaGasto">Fecha</label>
+    <h3 style="text-align:center; margin-bottom:15px;">Registrar Gasto</h3>
+    <div class="gastos-formulario">
       <input type="date" id="fechaGasto" required />
-
-      <label for="descripcionGasto">Descripción</label>
       <input type="text" id="descripcionGasto" placeholder="Descripción" required />
-
-      <label for="montoGasto">Monto ($)</label>
       <input type="number" id="montoGasto" placeholder="Monto ($)" required />
 
-      <label for="categoriaGasto">Categoría</label>
       <select id="categoriaGasto" required>
-        <option value="" disabled selected>Selecciona categoría</option>
+        <option value="" disabled selected>Categoría</option>
         <option value="insumos">Insumos</option>
         <option value="gastos">Gastos</option>
         <option value="otros">Otros</option>
       </select>
 
-      <label for="sucursalGasto">Sucursal</label>
       <select id="sucursalGasto" required>
-        <option value="" disabled selected>Selecciona sucursal</option>
+        <option value="" disabled selected>Sucursal</option>
         <option value="Lavandería 1">Lavandería 1</option>
         <option value="Lavandería 2">Lavandería 2</option>
       </select>

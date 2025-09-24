@@ -66,14 +66,24 @@ function mostrarTablaRecibos(recibos) {
     return;
   }
 
-  recibos.forEach(r => {
+  recibos.forEach((r, index) => {
+    const estadoTexto = r.estado || '';
+    let estadoColor = '';
+    if (estadoTexto.toLowerCase() === 'pendiente') {
+      estadoColor = '<span style="color:red; font-weight:bold;">' + estadoTexto + '</span>';
+    } else if (estadoTexto.toLowerCase() === 'pagado') {
+      estadoColor = '<span style="color:green; font-weight:bold;">' + estadoTexto + '</span>';
+    } else {
+      estadoColor = estadoTexto;
+    }
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>${r.folio || ''}</td>
+      <td>${index + 1}</td>  <!-- Folio consecutivo -->
       <td>${r.cliente || ''}</td>
       <td>$${parseFloat(r.total || 0).toFixed(2)}</td>
       <td>${r.fechaEntrega || ''}</td>
-      <td>${r.estado || ''}</td>
+      <td>${estadoColor}</td>
       <td>${r.metodoPago || ''}</td>
       <td>${r.servicio || ''}</td>
     `;

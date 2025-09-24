@@ -9,6 +9,21 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
+  <style>
+    /* Colores para el estado */
+    .estado-pagado {
+      background-color: #d4f8d4; /* Verde clarito */
+      color: #065f08;
+      font-weight: bold;
+      text-align: center;
+    }
+    .estado-pendiente {
+      background-color: #f8d4d4; /* Rojo clarito */
+      color: #800000;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <div class="contenedor">
@@ -115,5 +130,31 @@
   </div>
 
   <script src="analisis.js"></script>
+  <script>
+    // Modificar la función que llena la tabla (parte de analisis.js)
+    function llenarTablaRecibos(recibos) {
+      const tbody = document.querySelector("#tablaRecibos tbody");
+      tbody.innerHTML = "";
+
+      // Ordenar por folio descendente
+      recibos.sort((a, b) => parseInt(b.folio) - parseInt(a.folio));
+
+      recibos.forEach(r => {
+        const fila = document.createElement("tr");
+
+        fila.innerHTML = `
+          <td>${r.folio}</td>
+          <td>${r.cliente}</td>
+          <td>$${parseFloat(r.total).toFixed(2)}</td>
+          <td>${r.fechaEntrega}</td>
+          <td class="${r.estado === 'pagado' ? 'estado-pagado' : 'estado-pendiente'}">${r.estado}</td>
+          <td>${r.metodoPago}</td>
+          <td>${r.sucursal}</td>
+        `;
+
+        tbody.appendChild(fila);
+      });
+    }
+  </script>
 </body>
 </html>

@@ -237,21 +237,27 @@ function registrarGasto() {
 function eliminarFiltrados() {
   const desde = document.getElementById("filtroDesde").value;
   const hasta = document.getElementById("filtroHasta").value;
-  if (!confirm("¿Seguro que deseas eliminar todos los recibos y gastos filtrados?")) return;
+  if (!confirm("¿Seguro que deseas eliminar todos los recibos pagados y gastos filtrados?")) return;
 
   const desdeFecha = desde ? new Date(desde + "T00:00:00") : null;
   const hastaFecha = hasta ? new Date(hasta + "T23:59:59") : null;
 
+  // Solo eliminar recibos PAGADOS
   db.ref("recibos").once("value", (snapshot) => {
     snapshot.forEach((child) => {
       const recibo = child.val();
       const fechaEntrega = new Date(recibo.fechaEntrega + "T00:00:00");
-      if ((!desdeFecha || fechaEntrega >= desdeFecha) && (!hastaFecha || fechaEntrega <= hastaFecha)) {
+      if (
+        recibo.estado === "pagado" &&
+        (!desdeFecha || fechaEntrega >= desdeFecha) &&
+        (!hastaFecha || fechaEntrega <= hastaFecha)
+      ) {
         db.ref("recibos/" + child.key).remove();
       }
     });
   });
 
+  // Eliminar gastos siempre
   db.ref("gastos").once("value", (snapshot) => {
     snapshot.forEach((child) => {
       const gasto = child.val();

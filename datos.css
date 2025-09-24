@@ -92,3 +92,105 @@ button.volver:hover,
 button.ver-datos:hover {
   background-color: #0056b3;
 }
+
+/* --- FILTROS DE FECHAS --- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.filtros label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.filtros input[type="date"] {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  font-size: 15px;
+}
+
+.filtros button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.filtros button:first-of-type {
+  background: #007bff;
+  color: white;
+}
+
+.filtros button:first-of-type:hover {
+  background: #0056b3;
+}
+
+.filtros button:last-of-type {
+  background: #dc3545;
+  color: white;
+}
+
+.filtros button:last-of-type:hover {
+  background: #a71d2a;
+}
+
+/* --- FORMULARIO DE GASTOS --- */
+.gastos-formulario {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.gastos-formulario input,
+.gastos-formulario select {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.gastos-formulario button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #28a745;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.gastos-formulario button:hover {
+  background: #1e7e34;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .gastos-formulario {
+    grid-template-columns: 1fr;
+  }
+
+  .filtros {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtros input[type="date"],
+  .filtros button {
+    width: 100%;
+  }
+}
