@@ -48,6 +48,9 @@ async function aplicarFiltros() {
     }
   });
 
+  // Ordenar recibos por folio numérico ascendente
+  recibos.sort((a, b) => (parseInt(a.folio) || 0) - (parseInt(b.folio) || 0));
+
   mostrarTablaRecibos(recibos);
   generarGraficas(recibos);
 }
@@ -66,24 +69,22 @@ function mostrarTablaRecibos(recibos) {
     return;
   }
 
-  recibos.forEach((r, index) => {
+  recibos.forEach(r => {
     const estadoTexto = r.estado || '';
-    let estadoColor = '';
+    let estadoStyle = '';
     if (estadoTexto.toLowerCase() === 'pendiente') {
-      estadoColor = '<span style="color:red; font-weight:bold;">' + estadoTexto + '</span>';
+      estadoStyle = 'style="background-color:red; color:white; font-weight:bold;"';
     } else if (estadoTexto.toLowerCase() === 'pagado') {
-      estadoColor = '<span style="color:green; font-weight:bold;">' + estadoTexto + '</span>';
-    } else {
-      estadoColor = estadoTexto;
+      estadoStyle = 'style="background-color:green; color:white; font-weight:bold;"';
     }
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>${index + 1}</td>  <!-- Folio consecutivo -->
+      <td>${r.folio || ''}</td>
       <td>${r.cliente || ''}</td>
       <td>$${parseFloat(r.total || 0).toFixed(2)}</td>
       <td>${r.fechaEntrega || ''}</td>
-      <td>${estadoColor}</td>
+      <td ${estadoStyle}>${estadoTexto}</td>
       <td>${r.metodoPago || ''}</td>
       <td>${r.servicio || ''}</td>
     `;
