@@ -1,6 +1,6 @@
 body {
-  background: url('imagenes/logo1.png') no-repeat center center fixed;
-  background-size: cover;
+  background: black url('imagenes/logo1.png') no-repeat center center fixed;
+  background-size: 500px;
   color: white;
   font-family: Arial, sans-serif;
   margin: 0;
@@ -106,15 +106,14 @@ canvas {
   color: #ffffff;
 }
 
-/* === ESTILOS ESPECIALES PARA ESTADO === */
 .estado-pagado {
-  background-color: #d4f8d4; /* Verde claro */
+  background-color: #d4f8d4;
   color: #065f08;
   font-weight: bold;
 }
 
 .estado-pendiente {
-  background-color: #f8d4d4; /* Rojo claro */
+  background-color: #f8d4d4;
   color: #800000;
   font-weight: bold;
 }
