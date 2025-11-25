@@ -1,31 +1,23 @@
+/* ===========================
+   ESTILOS GENERALES DEL BODY
+   =========================== */
 body {
     margin: 0;
     padding: 0;
     display: none;
     justify-content: center;
     align-items: center;
-    background: url('imagenes/logo1.png') repeat;
-    background-size: cover, 150px 150px;
-    background-position: center center, top left;
-    background-attachment: fixed, fixed;
-    color: white;
+    background: white !important; /* FONDO BLANCO */
+    color: black;
     flex-direction: column;
     overflow-y: auto;
     font-family: Arial, sans-serif;
     position: relative;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('imagenes/logo1.png') repeat;
-    background-size: 150px 150px;
-    opacity: 0.1;
-    pointer-events: none;
-    z-index: 0;
-}
-
+/* ===========================
+   CONTENEDOR DEL FORMULARIO
+   =========================== */
 .container {
     background: rgba(0, 0, 0, 0.7);
     padding: 20px;
@@ -34,8 +26,10 @@ body::before {
     max-width: 400px;
     position: relative;
     z-index: 1;
+    color: white;
 }
 
+/* Inputs y botones */
 input, select, button, textarea {
     padding: 10px;
     font-size: 16px;
@@ -61,17 +55,47 @@ button:hover {
     display: none;
 }
 
+/* ===========================
+   RECIBO GENERADO (CON MARCA DE AGUA)
+   =========================== */
 #recibo {
     margin-top: 20px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95); /* Fondo blanco */
     color: black;
     padding: 15px;
     border-radius: 10px;
     width: 90%;
     max-width: 400px;
     box-sizing: border-box;
+
+    /* ----------- MARCA DE AGUA ------------ */
+    position: relative;
+    overflow: hidden;
 }
 
+#recibo::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250px;      /* Tamaño del logo marca de agua */
+    height: 250px;
+    transform: translate(-50%, -50%);
+    background: url('imagenes/logo1.png') no-repeat center center;
+    background-size: contain;
+    opacity: 0.15;     /* Transparencia de la marca de agua */
+    z-index: 0;
+}
+
+/* Para que el texto quede arriba del logo */
+#recibo * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===========================
+   ESTILOS DEL RECIBO
+   =========================== */
 .folio {
     color: red;
     font-weight: bold;
@@ -92,15 +116,17 @@ button:hover {
     display: block;
     margin: 5px 0 2px;
 }
+
+/* Último folio estilo */
 .ultimo-folio {
     font-weight: bold;
     font-size: 1.2em;
-    color: #FFD700; /* Dorado para resaltar */
-    background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    color: #FFD700; 
+    background: rgba(0, 0, 0, 0.5);
     padding: 8px 12px;
     border-radius: 8px;
     text-align: center;
     margin-bottom: 10px;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7); /* Brillo dorado */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
     border: 1px solid #FFD700;
 }
