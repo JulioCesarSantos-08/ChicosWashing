@@ -1,13 +1,10 @@
-/* ===========================
-   ESTILOS GENERALES DEL BODY
-   =========================== */
 body {
     margin: 0;
     padding: 0;
     display: none;
     justify-content: center;
     align-items: center;
-    background: white !important; /* FONDO BLANCO */
+    background: white !important;
     color: black;
     flex-direction: column;
     overflow-y: auto;
@@ -15,9 +12,6 @@ body {
     position: relative;
 }
 
-/* ===========================
-   CONTENEDOR DEL FORMULARIO
-   =========================== */
 .container {
     background: rgba(0, 0, 0, 0.7);
     padding: 20px;
@@ -29,7 +23,6 @@ body {
     color: white;
 }
 
-/* Inputs y botones */
 input, select, button, textarea {
     padding: 10px;
     font-size: 16px;
@@ -55,12 +48,9 @@ button:hover {
     display: none;
 }
 
-/* ===========================
-   RECIBO GENERADO (CON MARCA DE AGUA)
-   =========================== */
 #recibo {
     margin-top: 20px;
-    background: rgba(255, 255, 255, 0.95); /* Fondo blanco */
+    background: rgba(255, 255, 255, 0.95);
     color: black;
     padding: 15px;
     border-radius: 10px;
@@ -68,7 +58,6 @@ button:hover {
     max-width: 400px;
     box-sizing: border-box;
 
-    /* ----------- MARCA DE AGUA ------------ */
     position: relative;
     overflow: hidden;
 }
@@ -78,24 +67,20 @@ button:hover {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 250px;      /* Tamaño del logo marca de agua */
+    width: 250px;    
     height: 250px;
     transform: translate(-50%, -50%);
     background: url('imagenes/logo1.png') no-repeat center center;
     background-size: contain;
-    opacity: 0.15;     /* Transparencia de la marca de agua */
+    opacity: 0.20;   
     z-index: 0;
 }
 
-/* Para que el texto quede arriba del logo */
 #recibo * {
     position: relative;
     z-index: 1;
 }
 
-/* ===========================
-   ESTILOS DEL RECIBO
-   =========================== */
 .folio {
     color: red;
     font-weight: bold;
@@ -117,7 +102,6 @@ button:hover {
     margin: 5px 0 2px;
 }
 
-/* Último folio estilo */
 .ultimo-folio {
     font-weight: bold;
     font-size: 1.2em;
