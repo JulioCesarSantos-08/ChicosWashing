@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Recibos Guardados - Chicos Washing</title>
-  <link rel="icon" type="image/png" href="imagenes/logo1.png" />
   <link rel="stylesheet" href="datos.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -89,5 +88,19 @@
       <button onclick="document.getElementById('modalEditarRecibo').style.display='none'">Cancelar</button>
     </div>
   </div>
+
+  <!-- 📌 MODAL PARA VER RECIBO PROFESIONAL -->
+  <div id="modalVerRecibo" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width:600px;">
+      <h3>Recibo</h3>
+
+      <!-- Aquí datos.js insertará el recibo -->
+      <div id="vistaRecibo"></div>
+
+      <br>
+      <button onclick="document.getElementById('modalVerRecibo').style.display='none'">Cerrar</button>
+    </div>
+  </div>
+
 </body>
 </html>
