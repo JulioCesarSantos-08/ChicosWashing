@@ -43,10 +43,31 @@
         <input type="date" id="fechaEntrega" required />
 
         <label for="horaEntrega">Hora de entrega:</label>
-        <input type="time" id="horaEntrega" required />
+        <!-- YA NO OBLIGATORIA -->
+        <input type="time" id="horaEntrega" />
 
-        <label for="descripcion">Descripción de la ropa:</label>
-        <textarea id="descripcion" placeholder="Ej. 3 camisas, 2 pantalones, 1 chamarra"></textarea>
+        <h4>Descripción de la ropa:</h4>
+
+        <div class="ropa-formulario">
+            <label>👕 Playeras:</label><input type="number" id="playeras" min="0" value="0">
+            <label>👖 Pantalones:</label><input type="number" id="pantalones" min="0" value="0">
+            <label>🩳 Shorts:</label><input type="number" id="shorts" min="0" value="0">
+            <label>👟 Tenis:</label><input type="number" id="tenis" min="0" value="0">
+            <label>👔 Camisas:</label><input type="number" id="camisas" min="0" value="0">
+            <label>🧥 Suéter:</label><input type="number" id="abrigos" min="0" value="0">
+            <label>🧦 Calcetines:</label><input type="number" id="calcetines" min="0" value="0">
+            <label>👗 Vestidos:</label><input type="number" id="vestidos" min="0" value="0">
+            <label>🛁 Toallas:</label><input type="number" id="toallas" min="0" value="0">
+            <label>🛏️ Sábanas:</label><input type="number" id="sabanas" min="0" value="0">
+            <label>🛌 Edredones:</label><input type="number" id="cobijas" min="0" value="0">
+            <label>🧢 Gorras:</label><input type="number" id="gorras" min="0" value="0">
+            <label>👚 Blusas:</label><input type="number" id="blusas" min="0" value="0">
+            <label>👕 Camisetas:</label><input type="number" id="camisetas" min="0" value="0">
+            <label>👒 Faldas:</label><input type="number" id="faldas" min="0" value="0">
+            <label>🦺 Chalecos:</label><input type="number" id="chalecos" min="0" value="0">
+            <label>🎒 Mochilas:</label><input type="number" id="mochilas" min="0" value="0">
+            <label>🩲 Boxers:</label><input type="number" id="boxers" min="0" value="0">
+        </div>
 
         <label for="estado">Estado del recibo:</label>
         <select id="estado">
