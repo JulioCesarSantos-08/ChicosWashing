@@ -17,8 +17,6 @@ window.onload = function () {
     if (clave === "123456") {
         document.body.style.display = "flex";
         cargarUltimoFolio();
-
-        // ⬅️ Activar cálculo automático del total
         activarCalculoTotal();
     } else {
         alert("Contraseña incorrecta. No se puede acceder.");
@@ -26,42 +24,47 @@ window.onload = function () {
     }
 };
 
-// 🔹 Cargar último folio
+// 🔹 Cargar último folio (ARREGLADO)
 function cargarUltimoFolio() {
-    const ref = database.ref("recibos").orderByChild("folio").limitToLast(1);
-    ref.once("value", snapshot => {
-        let ultimoFolio = 0;
-        snapshot.forEach(child => {
-            ultimoFolio = parseInt(child.val().folio) || 0;
+    database.ref("recibos")
+        .once("value", snapshot => {
+
+            let mayor = 0;
+
+            snapshot.forEach(child => {
+                const f = parseInt(child.val().folio);
+                if (!isNaN(f) && f > mayor) mayor = f;
+            });
+
+            document.getElementById("ultimoFolio").textContent =
+                `Último folio registrado: ${mayor}`;
+
+            document.getElementById("folio").value = mayor + 1;
         });
-        document.getElementById("ultimoFolio").textContent = `Último folio registrado: ${ultimoFolio}`;
-        document.getElementById("folio").value = ultimoFolio + 1;
-    });
 }
 
-// 🔹 Activar cálculo automático de total (kilos × 18)
+// 🔹 Cálculo automático del total (kilos × 18)
 function activarCalculoTotal() {
     const kilosInput = document.getElementById("kilos");
     const totalInput = document.getElementById("total");
 
-    // Cuando cambien los kilos → calcular total
     kilosInput.addEventListener("input", () => {
         const kilos = parseFloat(kilosInput.value) || 0;
 
-        // Si el total NO ha sido modificado manualmente
         if (!totalInput.dataset.editado) {
             totalInput.value = kilos * 18;
         }
     });
 
-    // Si el usuario escribe manualmente el total → dejar de autocalcular
     totalInput.addEventListener("input", () => {
         totalInput.dataset.editado = "true";
     });
 }
 
-// 🔹 Enviar datos a Firebase
-function enviarDatosAFirebase(cliente, folio, fechaIngreso, total, servicio, kilos, fechaEntrega, horaEntrega, ropaEntregada, lavadas, estado, metodoPago) {
+// 🔹 Enviar a Firebase
+function enviarDatosAFirebase(cliente, folio, fechaIngreso, total, servicio, kilos,
+    fechaEntrega, horaEntrega, ropaEntregada, lavadas, estado, metodoPago) {
+
     const reciboData = {
         cliente,
         folio,
@@ -82,23 +85,23 @@ function enviarDatosAFirebase(cliente, folio, fechaIngreso, total, servicio, kil
         .catch(error => console.error("Error al enviar datos:", error));
 }
 
-// 🔹 Formato fecha
+// 🔹 Fecha en formato bonito
 function formatDate(dateString) {
-    const [year, month, day] = dateString.split("-");
-    return `${day}-${month}-${year}`;
+    const [y, m, d] = dateString.split("-");
+    return `${d}-${m}-${y}`;
 }
 
 // 🔹 Formato hora
 function formatoHora(hora24) {
     if (!hora24) return "Sin hora asignada";
-    const [hora, minutos] = hora24.split(":");
-    const h = parseInt(hora, 10);
-    const ampm = h >= 12 ? "PM" : "AM";
-    const hora12 = h % 12 || 12;
-    return `${hora12}:${minutos} ${ampm}`;
+    const [h, min] = hora24.split(":");
+    const hh = parseInt(h);
+    const ampm = hh >= 12 ? "PM" : "AM";
+    const h12 = hh % 12 || 12;
+    return `${h12}:${min} ${ampm}`;
 }
 
-// 🔹 FECHA AUTOMÁTICA
+// 🔹 Fecha actual
 function fechaActual() {
     const hoy = new Date();
     let d = hoy.getDate().toString().padStart(2, "0");
@@ -107,7 +110,7 @@ function fechaActual() {
     return `${d}-${m}-${y}`;
 }
 
-// 🔹 GENERADOR AUTOMÁTICO DE DESCRIPCIÓN DE ROPA
+// 🔹 Generar descripción automática
 function generarDescripcionRopa() {
     const prendas = [
         { id: "playeras", nombre: "Playeras" },
@@ -132,18 +135,22 @@ function generarDescripcionRopa() {
 
     let lista = prendas
         .map(p => {
-            const cantidad = parseInt(document.getElementById(p.id).value) || 0;
-            return cantidad > 0 ? `${cantidad} ${p.nombre}` : null;
+            const cant = parseInt(document.getElementById(p.id).value) || 0;
+            return cant > 0 ? `${cant} ${p.nombre}` : null;
         })
-        .filter(x => x !== null);
+        .filter(x => x);
+
+    // Campo MANUAL extra
+    const manual = document.getElementById("descripcionManual")?.value.trim();
+
+    if (manual) lista.push(manual);
 
     return lista.length > 0 ? lista.join(", ") : "No especificada";
 }
 
-// 🔹 GENERAR RECIBO
+// 🔹 Generar Recibo
 function generarRecibo() {
 
-    // Obtener datos
     const cliente = document.getElementById("cliente").value.trim();
     const servicio = document.getElementById("lavanderia").value;
     const kilos = document.getElementById("kilos").value;
@@ -155,11 +162,9 @@ function generarRecibo() {
     const estado = document.getElementById("estado").value;
     const metodoPago = document.getElementById("metodoPago").value;
 
-    // Nueva descripción automática
     const ropaEntregada = generarDescripcionRopa();
 
-    // Validación (SIN HORA)
-    if (!folio || !cliente || !kilos || !fechaIngresoRaw || !total || !fechaEntregaRaw || !estado || !metodoPago) {
+    if (!folio || !cliente || !kilos || !fechaIngresoRaw || !total || !fechaEntregaRaw) {
         alert("Por favor, complete todos los campos obligatorios.");
         return;
     }
@@ -168,10 +173,11 @@ function generarRecibo() {
     const fechaEntrega = formatDate(fechaEntregaRaw);
     const horaEntrega = formatoHora(horaEntregaRaw);
 
-    // Guardar en Firebase
-    enviarDatosAFirebase(cliente, folio, fechaIngreso, total, servicio, kilos, fechaEntrega, horaEntrega, ropaEntregada, 0, estado, metodoPago);
+    enviarDatosAFirebase(
+        cliente, folio, fechaIngreso, total, servicio, kilos,
+        fechaEntrega, horaEntrega, ropaEntregada, 0, estado, metodoPago
+    );
 
-    // Recibo visual
     document.getElementById("recibo").innerHTML = `
         <div class="recibo-header">
             <img src="imagenes/logo1.png" class="recibo-logo">
