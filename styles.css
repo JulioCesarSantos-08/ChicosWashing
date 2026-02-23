@@ -1,70 +1,152 @@
-body {
-    margin: 0;
-    padding: 0;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background: white !important;
-    color: black;
-    flex-direction: column;
-    overflow-y: auto;
-    font-family: Arial, sans-serif;
-    position: relative;
-}
+/* =========================================
+   ESTILOS GENERALES
+   ========================================= */
 
-.container {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    position: relative;
-    z-index: 1;
-    color: white;
-}
-
-input, select, button, textarea {
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    width: 100%;
-    margin: 10px 0;
+* {
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    padding: 20px 0;
+    display: none; /* 🔐 se muestra tras contraseña */
+    justify-content: center;
+    align-items: center; /* ✅ CENTRADO CORRECTO */
+    background: #f2f4f7;
+    color: #222;
+    flex-direction: column;
+    overflow-y: auto;
+    font-family: "Inter", Arial, sans-serif;
+}
+
+/* =========================================
+   CONTENEDOR PRINCIPAL
+   ========================================= */
+
+.container {
+    background: #111827;
+    padding: 18px;
+    border-radius: 14px;
+    width: 95%;
+    max-width: 420px;
+    color: #ffffff;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   INPUTS / SELECTS / BOTONES
+   ========================================= */
+
+input,
+select,
+textarea,
 button {
-    background-color: #007bff;
+    width: 100%;
+    padding: 11px 12px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: none;
+    margin: 8px 0;
+    font-family: inherit;
+}
+
+input,
+select,
+textarea {
+    background: #f9fafb;
+    color: #111;
+}
+
+textarea {
+    resize: none;
+}
+
+button {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(37,99,235,0.45);
 }
 
 .hidden {
     display: none;
 }
 
-/* ============================
+/* =========================================
+   LISTAS DESPLEGABLES
+   ========================================= */
+
+details {
+    background: #1f2933;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+summary {
+    font-weight: 600;
+    cursor: pointer;
+    color: #93c5fd;
+    font-size: 16px;
+}
+
+details[open] summary {
+    margin-bottom: 8px;
+}
+
+details label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+details input {
+    width: 70px;
+    text-align: center;
+}
+
+/* =========================================
+   ÚLTIMO FOLIO
+   ========================================= */
+
+.ultimo-folio {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #fde047;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 12px;
+    border: 1px solid #fde047;
+    box-shadow: 0 0 12px rgba(253,224,71,0.45);
+}
+
+/* =========================================
    RECIBO PROFESIONAL
-   ============================ */
+   ========================================= */
+
 #recibo {
     margin-top: 20px;
     background: white;
-    color: black;
-    padding: 25px;
-    border-radius: 12px;
+    color: #111;
+    padding: 24px;
+    border-radius: 16px;
     width: 95%;
     max-width: 480px;
-    box-sizing: border-box;
-    box-shadow: 0 0 12px rgba(0,0,0,0.25);
-
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
     position: relative;
     overflow: hidden;
-    font-family: 'Arial', sans-serif;
+    font-family: "Inter", Arial, sans-serif;
 }
 
 /* Marca de agua */
@@ -73,12 +155,12 @@ button:hover {
     position: absolute;
     top: 60%;
     left: 50%;
-    width: 400px;
-    height: 300px;
+    width: 420px;
+    height: 320px;
     transform: translate(-50%, -50%);
-    background: url('imagenes/logo1.png') no-repeat center;
+    background: url("imagenes/logo1.png") no-repeat center;
     background-size: contain;
-    opacity: 0.12;
+    opacity: 0.08;
     z-index: 0;
 }
 
@@ -87,64 +169,78 @@ button:hover {
     z-index: 1;
 }
 
-/* Encabezado */
+/* =========================================
+   ENCABEZADO RECIBO
+   ========================================= */
+
 .recibo-header {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .recibo-logo {
-    width: 70px;
-    height: 70px;
+    width: 72px;
+    height: 72px;
     object-fit: contain;
 }
 
 .recibo-titulo {
     font-size: 22px;
-    font-weight: bold;
-    color: #333;
+    font-weight: 800;
+    color: #111827;
 }
 
-/* Línea */
+/* =========================================
+   LÍNEA SEPARADORA
+   ========================================= */
+
 .linea {
     width: 100%;
-    height: 2px;
-    background: #007bff;
-    margin: 10px 0 15px;
+    height: 3px;
+    background: linear-gradient(90deg, #2563eb, #1d4ed8);
+    margin: 12px 0 16px;
+    border-radius: 2px;
 }
 
-/* Datos */
+/* =========================================
+   DATOS DEL RECIBO
+   ========================================= */
+
 .datos-recibo p {
-    margin: 5px 0;
-    font-size: 16px;
+    margin: 6px 0;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.datos-recibo strong {
+    color: #1f2937;
 }
 
 .folio {
-    color: #b00000;
-    font-weight: bold;
+    color: #b91c1c;
+    font-weight: 800;
     font-size: 20px;
 }
 
-/* Pie */
-.recibo-footer {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 14px;
-    color: #333;
+.total {
+    font-size: 20px;
+    font-weight: 800;
+    color: #15803d;
 }
 
-/* Último folio */
-.ultimo-folio {
-    font-weight: bold;
-    font-size: 1.2em;
-    color: #FFD700;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 8px 12px;
-    border-radius: 8px;
+/* =========================================
+   PIE DEL RECIBO
+   ========================================= */
+
+.recibo-footer {
+    margin-top: 22px;
     text-align: center;
-    margin-bottom: 10px;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-    border: 1px solid #FFD700;
+    font-size: 14px;
+    color: #374151;
+}
+
+.recibo-footer p {
+    margin: 4px 0;
 }
